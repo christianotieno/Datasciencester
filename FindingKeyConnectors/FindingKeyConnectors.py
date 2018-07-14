@@ -1,3 +1,5 @@
+from __future__ import division
+
 users = [
     {"id": 0, "name": "Hero"},
     {"id": 1, "name": "Dunn"},
@@ -23,11 +25,10 @@ for i, j in friendships:
 
 def number_of_friends(user):
     """how many friends does _user_ have?"""
-    return len(user["friends"])                 # length of friend_ids list
+    return len(user["friends"]) # length of friend_ids list
 
-total_connections = sum(number_of_friends(user) for user in user)       # 24
-
-from __future__ import division
+total_connections = sum(number_of_friends(user)
+                        for user in users) # 24
 
 num_users = len(users) 
 
@@ -36,11 +37,20 @@ avg_connections = total_connections / num_users
 
 #create a list (user_id, number _of_friends)
 num_friends_by_id = [(user["id"], number_of_friends(user)) for user in users]
-
-# get it sorted, by num_friends, largest to smallest
-sorted(num_friends_by_id, key = lambda(user_id, num_friends): num_friends, reverse = True)                                  
+                              
 # each pair is (user_id, num_friends)
 # [(1, 3), (2, 3), (3, 3), (5, 3), (8, 3), 
 # (0, 2), (4, 2), (6, 2), (7, 2), (9, 1)]
 
+def friends_of_friend_ids_bad(user):
+    #foaf is short for "friend of a friend"
+    return [foaf["id"] 
+            for friend in user["friends"] 
+            for foaf in friend["friends"]]     
+    # for each of user's friends
+    # get each of _their_ friends
+print([friend["id"] for friend in users[0]["friends"]])
+print([friend["id"] for friend in users[1]["friends"]])
+print([friend["id"] for friend in users[2]["friends"]])
+print([friend["id"] for friend in users[3]["friends"]])
 
