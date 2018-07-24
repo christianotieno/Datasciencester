@@ -39,7 +39,7 @@ num_friends_by_id = [(user["id"], number_of_friends(user))
                      for user in users]
 
 sorted(num_friends_by_id,                                # get it sorted
-       key=lambda (user_id, num_friends): num_friends,   # by num_friends
+       key=lambda user_id, num_friends: num_friends,   # by num_friends
        reverse=True)                                     # largest to smallest
 
 # each pair is (user_id, num_friends)
@@ -64,7 +64,7 @@ def not_the_same(user, other_user):
 def not_friends(user, other_user):
     """other_user is not a friend if he's not in user["friends"];
     that is, if he's not_the_same as all the people in the user["friends"]"""
-    return all (not_the_same(friend, other_user) fro friends in user["friends"])
+    return all (not_the_same(friend, other_user) for friends in user["friends"])
 
 def friends_of_friend_ids(user):
     return Counter(foaf["id"]
@@ -73,4 +73,4 @@ def friends_of_friend_ids(user):
                    if not_the_same(user, foaf)      # who aren't me
                    and not_friends(user, foaf))     # and aren't my friends
 
-print friends_of_friend_ids(users[3])               # Counter({0: 2, 5: 1})
+print (friends_of_friend_ids(users[3]))               # Counter({0: 2, 5: 1})
